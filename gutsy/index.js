@@ -1,20 +1,49 @@
 const http = require('http');
 
-function gutsy() {
-    return {
-        createServer: function() {
-            console.log("in create server")
-        },
-        listen: function(port) {
-            if(typeof port !== "number") {
-                throw new TypeError(`Port should be a number, got ${typeof port}`)
+class Gutsy {
+    constructor() {
+        this._stack = new Map();
+    }
+
+    get(path, handler) {
+      this._stack.set(path, handler);
+    }
+
+    listen(port, callback) {
+        const handler = (req, res) => {
+            this.handle(req, res, err => {
+              if (err) {
+                res.writeHead(500);
+                res.end('Internal Server Error ');
+              }
+            });
+          };
+          return http.createServer(handler).listen({ port }, callback);
+    }
+
+    handle(req, res, callback) {
+        let idx = 0;
+
+        const next = (err) => {
+          if (err != null) {
+            return setImmediate(() => callback(err));
+          }
+          if (idx >= this._stack.length) {
+            return setImmediate(() => callback());
+          }
+          
+          const layer = this._stack.get(req.url);
+          setImmediate(() => {
+            try {
+              layer(req, res, next);
+            } catch(error) {
+              next(error);
             }
-            const server = http.createServer((req, res) => {
-                res.end();
-            })
-            server.listen(port);
-        },
+          });
+        };
+      
+        next();
     }
 }
 
-module.exports = gutsy;
+module.exports = Gutsy;

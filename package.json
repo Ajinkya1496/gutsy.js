@@ -4,7 +4,7 @@
   "description": "Gutsy node server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon example.js",
     "test": "test"
   },
   "repository": {

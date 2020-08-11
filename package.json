@@ -1,0 +1,26 @@
+{
+  "name": "gutsy",
+  "version": "1.0.0",
+  "description": "Gutsy node server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon example.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ajinkya1496/gutsy.js.git"
+  },
+  "keywords": [
+    "gutsy"
+  ],
+  "author": "Ajinkya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ajinkya1496/gutsy.js/issues"
+  },
+  "homepage": "https://github.com/Ajinkya1496/gutsy.js#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
